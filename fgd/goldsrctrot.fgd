@@ -1,0 +1,12 @@
+// Half-Life: Blue Shift Special Entities
+
+@PointClass sprite({"path" : "sprites/XFlare1.spr",  "frame": 8 }) base(Targetname, Target) size(-32 -32 -32, 32 32 32) color(0 255 0) = env_warpball : "Warp In Ball"
+[
+	spawnflags(flags) =
+	[
+		1: "Remove On fire" : 0
+		2: "Kill Center" : 0
+	]
+	radius(string) : "Beam Radius" : "256"
+	warp_target(string) : "Warp Target" : ""
+]

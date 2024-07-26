@@ -1,0 +1,4 @@
+// Combined FGD
+@include "HalfLife.fgd"
+@include "goldsrctrot.fgd"
+@include "zhlt.fgd"
