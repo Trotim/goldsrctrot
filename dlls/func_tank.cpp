@@ -462,7 +462,44 @@ void CFuncTank::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useT
 
 edict_t* CFuncTank::FindTarget(edict_t* pPlayer)
 {
-	return pPlayer;
+	CBaseEntity* pReturn = NULL;
+	CBaseEntity* pNextEnt = NULL;
+	int iNearest = 8192; // so first visible entity will become the closest.
+	int iDist;
+
+	while ((pNextEnt = UTIL_FindEntityInSphere(pNextEnt, this->Center(), 8192)) != NULL)
+	{
+		if (!pNextEnt->IsAlive())
+			continue;
+		
+		if (pNextEnt->pev->takedamage == DAMAGE_NO)
+			continue;
+
+		iDist = (pNextEnt->pev->origin - pev->origin).Length();
+
+		if (!InRange(iDist))
+			continue;
+
+		if (!FVisible(pNextEnt))
+			continue;
+
+		ALERT(at_console, "FindTarget %s\n", STRING(pNextEnt->pev->classname));
+
+		if (iDist <= iNearest)
+		{
+			iNearest = iDist;
+			pReturn = pNextEnt;
+		}
+	}
+
+	if ( pReturn )
+	{
+		ALERT(at_console, "FindTarget success: %s\n", STRING(pReturn->pev->classname));
+
+		return pReturn->edict();
+	}
+
+	//return pPlayer;
 }
 
 
